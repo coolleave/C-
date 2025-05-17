@@ -4,12 +4,11 @@ void initboard(char board[rows][cols], int row1, int col1, char set)
 {
     int i = 0;
     int j = 0;
-    for( i = 0; i < rows; i++)
+    for (i = 0; i < rows; i++)
     {
-        for(j = 0; j < cols; j++)
+        for (j = 0; j < cols; j++)
         {
             board[i][j] = set;
-            
         }
     }
     return;
@@ -19,15 +18,15 @@ void display(char board[rows][cols], int row1, int col1)
 {
     int i = 0;
     int j = 0;
-    for( i = 0; i <= row1; i++)
+    for (i = 0; i <= row1; i++)
     {
         printf("%d ", i);
     }
     printf("\n");
-    for(i = 1; i <= row1; i++)
+    for (i = 1; i <= row1; i++)
     {
         printf("%d", i);
-        for(j = 1; j <= col1; j ++)
+        for (j = 1; j <= col1; j++)
         {
             printf(" %c", board[i][j]);
         }
@@ -35,47 +34,44 @@ void display(char board[rows][cols], int row1, int col1)
     }
 }
 
-void setmines(char board[rows][cols],int row1, int col1)
+void setmines(char board[rows][cols], int row1, int col1)
 {
     int count = mines;
-    
-    while(count)
+
+    while (count)
     {
         int x = rand() % 9 + 1;
         int y = rand() % 9 + 1;
-        if(board[x][y] == '0')
+        if (board[x][y] == '0')
         {
             board[x][y] = '1';
-            count --;
+            count--;
         }
     }
 }
 
-
 //               show                       mine
 int iswin(char board3[rows][cols], char board4[rows][cols], int row1, int col1, int x1, int y1)
 {
-    if(board4[x1][y1] == '1')
+    if (board4[x1][y1] == '1')
     {
         return '0';
     }
     else
     {
-        printf("æŽ’é›·æˆåŠŸï¼ \n");
+        printf("ÅÅÀ×³É¹¦£¡ \n");
         // display(board4, row, col);
         printf("\n");
-        return  board4[x1 - 1][y1 - 1] + 
-                board4[x1 - 1][y1]     +
-                board4[x1 - 1][y1 + 1] +
-                board4[x1 + 1][y1 - 1] +
-                board4[x1 + 1][y1]     +
-                board4[x1 + 1][y1 + 1] +
-                board4[x1][y1 + 1]     +
-                board4[x1][y1 - 1] - 8 * '0';
-       
+        return board4[x1 - 1][y1 - 1] +
+               board4[x1 - 1][y1] +
+               board4[x1 - 1][y1 + 1] +
+               board4[x1 + 1][y1 - 1] +
+               board4[x1 + 1][y1] +
+               board4[x1 + 1][y1 + 1] +
+               board4[x1][y1 + 1] +
+               board4[x1][y1 - 1] - 8 * '0';
     }
 }
-
 
 //                   show                          mine
 void findmines(char board[rows][cols], char board1[rows][cols], int row1, int col1)
@@ -83,20 +79,20 @@ void findmines(char board[rows][cols], char board1[rows][cols], int row1, int co
     int x = 0;
     int y = 0;
     int count = row1 * col1 - mines;
-    while(count)
+    while (count)
     {
 
-        printf("è¯·è¾“å…¥åæ ‡ã€‹ã€‹ã€‹\n");
-        scanf("%d%d", &x,&y);
-        if(x >= 1 && x <= row1 && y >= 1 && y <= col1 )
+        printf("ÇëÊäÈë×ø±ê¡·¡·¡·\n");
+        scanf("%d%d", &x, &y);
+        if (x >= 1 && x <= row1 && y >= 1 && y <= col1)
         {
-            if(board[x][y] == '*')
-            {                  // show   mine
+            if (board[x][y] == '*')
+            { // show   mine
                 int ret = iswin(board, board1, row, col, x, y);
                 // display(board, row, col);
-                if(ret == '0')
+                if (ret == '0')
                 {
-                    printf("ä½ è¢«ç‚¸æ­»äº†\n");
+                    printf("Äã±»Õ¨ËÀÁË\n");
                     display(board1, row, col);
                     break;
                 }
@@ -106,31 +102,25 @@ void findmines(char board[rows][cols], char board1[rows][cols], int row1, int co
                     board[x][y] = ret + '0';
                     display(board, row, col);
                     printf("\n");
-                    count --;
-                    
+                    count--;
                 }
-                
             }
-            
+
             else
             {
-                printf("è¯¥åŒºåŸŸå·²å®Œæˆæ¸…æ‰«å·¥ä½œï¼ï¼è¯·é€‰æ‹©å…¶ä»–åŒºåŸŸ\n");
+                printf("¸ÃÇøÓòÒÑÍê³ÉÇåÉ¨¹¤×÷£¡£¡ÇëÑ¡ÔñÆäËûÇøÓò\n");
             }
-            
         }
-
 
         else
         {
-            printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥ï¼ï¼ï¼");
+            printf("ÊäÈëÓÐÎó£¬ÇëÖØÐÂÊäÈë£¡£¡£¡");
         }
-        
     }
-    if(count == 0)
+    if (count == 0)
     {
-        printf("æ­å–œèŽ·å¾—èƒœåˆ©ï¼ æŽ’é™¤äº†%dé¢—é›·\n", mines);
+        printf("¹§Ï²»ñµÃÊ¤Àû£¡ ÅÅ³ýÁË%d¿ÅÀ×\n", mines);
         display(board1, row, col);
-        
     }
-    return ;
+    return;
 }

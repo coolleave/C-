@@ -1,70 +1,67 @@
 #include "game.h"
 
-// å®šä¹‰èœå•å‡½æ•°
+// ¶¨Òå²Ëµ¥º¯Êı
 void menu()
 {
     printf("************************************\n");
-    printf("**********1ã€game  0ã€exit**********\n");
-    printf("*************è¯·è¾“å…¥ ã€‹ã€‹ã€‹ã€‹ã€‹*******\n");
+    printf("**********1¡¢game  0¡¢exit**********\n");
+    printf("*************ÇëÊäÈë ¡·¡·¡·¡·¡·*******\n");
     return;
 }
 
-// å®šä¹‰æ¸¸æˆå‡½æ•°
+// ¶¨ÒåÓÎÏ·º¯Êı
 void game()
 {
-    //å®šä¹‰æ£‹ç›˜
+    // ¶¨ÒåÆåÅÌ
     char mine[rows][cols] = {0};
     char show[rows][cols] = {0};
 
-    // åˆå§‹åŒ–æ£‹ç›˜
+    // ³õÊ¼»¯ÆåÅÌ
     initboard(show, row, col, '*');
     initboard(mine, row, col, '0');
-    // å±•ç¤ºæ£‹ç›˜
+    // Õ¹Ê¾ÆåÅÌ
     display(show, row, col);
     // display(mine, row, col);
 
     // mine setting
-    srand( (unsigned int ) time(NULL) );
+    srand((unsigned int)time(NULL));
     setmines(mine, row, col);
-    
+
     // display(mine,row,col);
     // mine finding
     findmines(show, mine, row, col);
     return;
 }
 
-
-//å®šä¹‰ä¸»æµ‹è¯•å‡½æ•°
+// ¶¨ÒåÖ÷²âÊÔº¯Êı
 void test()
 {
 
-    
     int input = 0;
-    do{
+    do
+    {
         menu();
         scanf("%d", &input);
-        switch(input)
+        switch (input)
         {
-            case 1:
-                {
-                    game();
-                    printf("game\n");
-                    break;
-                }
-
-            case 0:
-                {
-                    printf("æ¬¢è¿ä¸‹æ¬¡å†æ¥ï¼Œå†è§ï¼");
-                    break;
-
-                }
-            default:
-            {
-                printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥");
-            }
-            
+        case 1:
+        {
+            game();
+            printf("game\n");
+            break;
         }
-    }while (input);
+
+        case 0:
+        {
+            printf("»¶Ó­ÏÂ´ÎÔÙÀ´£¬ÔÙ¼û£¡");
+            break;
+        }
+        default:
+        {
+            printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë");
+        }
+        }
+    } while (input);
     return;
 }
 
