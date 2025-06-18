@@ -4,12 +4,20 @@
 #include "course_graph.h"
 #include "topo_sorter.h"
 #include "semester_planner.h"
-
+using namespace std;
 int main()
 {
     CourseGraph graph;
-    std::ifstream fin("data.txt");
-    std::string pre, post;
+    ifstream fin("data.txt");    // 输入文件
+    ofstream fout("output.txt"); // 添加文件输出流
+    string pre, post;
+
+    // 自定义一个 lambda 同时写入控制台和文件
+    auto print = [&](const string &msg)
+    {
+        cout << msg;
+        fout << msg;
+    };
 
     while (fin >> pre >> post)
     {
@@ -22,25 +30,25 @@ int main()
     auto topoOrder = TopologicalSorter::kahnSort(graph, hasCycle);
     if (hasCycle)
     {
-        std::cout << "课程依赖中存在循环，无法安排课程！" << std::endl;
+        print("课程依赖中存在循环，无法安排课程！\n");
         return 1;
     }
 
-    std::cout << "拓扑排序结果（推荐修课顺序）:\n";
+    print("拓扑排序结果（推荐修课顺序）:\n");
     for (const auto &course : topoOrder)
     {
-        std::cout << course << " ";
+        print(course + " ");
     }
-    std::cout << "\n\n";
+    print("\n\n");
 
     auto semesters = SemesterPlanner::planSemesters(graph);
-    std::cout << "学期课程安排如下:\n";
+    print("学期课程安排如下:\n");
     for (const auto &[sem, courses] : semesters)
     {
-        std::cout << "第 " << sem << " 学期: ";
+        print("第 " + to_string(sem) + " 学期: ");
         for (const auto &c : courses)
-            std::cout << c << " ";
-        std::cout << "\n";
+            print(c + " ");
+        print("\n");
     }
 
     return 0;
