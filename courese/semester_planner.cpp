@@ -1,27 +1,32 @@
 #include "semester_planner.h"
 #include <queue>
 #include <unordered_map>
+using namespace std;
 
-std::map<int, std::vector<std::string>> SemesterPlanner::planSemesters(const CourseGraph &graph)
+map<int, vector<string>> SemesterPlanner::planSemesters(const CourseGraph &graph)
 {
-    std::unordered_map<std::string, int> indegree = graph.computeIndegrees();
-    std::queue<std::string> q;
-    std::map<int, std::vector<std::string>> semesterMap;
-    std::unordered_map<std::string, int> levelMap;
+    // 课程，度
+    unordered_map<string, int> indegree = graph.computeIndegrees();
+    // 初始化排序队列
+    queue<string> q;
+    // 存储每个学期的课程，使用vector
+    map<int, vector<string>> semesterMap;
+    // 存储每个课程的学期级别
+    unordered_map<string, int> levelMap;
     // 初始化入度为0的课程
     for (const auto &[course, deg] : indegree)
     {
         if (deg == 0)
         {
             q.push(course);
-            levelMap[course] = 1;
+            levelMap[course] = 1; // 学期为1
         }
     }
-    // 进行拓扑排序并分配学期
+    // 分配学期
     while (!q.empty())
     {
         // 取出队首元素
-        std::string curr = q.front();
+        string curr = q.front();
         q.pop();
         // 获取当前课程的学期级别
         int currLevel = levelMap[curr];

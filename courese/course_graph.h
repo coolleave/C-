@@ -3,17 +3,23 @@
 #include <vector>
 #include <string>
 #include <set>
-
+using namespace std;
 class CourseGraph
 {
 public:
-    void addCourse(const std::string &course);
-    void addPrerequisite(const std::string &before, const std::string &after);
-    std::vector<std::string> getCourses() const;
-    const std::unordered_map<std::string, std::vector<std::string>> &getAdjList() const;
-    std::unordered_map<std::string, int> computeIndegrees() const;
+    // 添加课程
+    void addCourse(const string &course);
+    // 添加依赖关系
+    void addPrerequisite(const string &before, const string &after);
+    // 获取全部课程
+    vector<string> getCourses() const;
+    // 返回只读的邻接表
+    const unordered_map<string, vector<string>> &getAdjList() const;
+    unordered_map<string, int> computeIndegrees() const;
 
 private:
-    std::unordered_map<std::string, std::vector<std::string>> adjList;
-    std::set<std::string> allCourses;
+    // 存储课程的邻接表
+    unordered_map<string, vector<string>> adjList;
+    // 课程集合，防止有重复课程
+    set<string> allCourses;
 };

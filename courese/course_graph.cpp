@@ -1,38 +1,44 @@
 #include "course_graph.h"
-
-void CourseGraph::addCourse(const std::string &course)
+using namespace std;
+// 添加课程
+void CourseGraph::addCourse(const string &course)
 {
+
     allCourses.insert(course);
-    if (adjList.find(course) == adjList.end())
+    // 如果 adjList 中还没有这个课程的后继，就为它创建一个空的后继课程列表。
     {
         adjList[course] = {};
     }
 }
 
-void CourseGraph::addPrerequisite(const std::string &before, const std::string &after)
+void CourseGraph::addPrerequisite(const string &before, const string &after)
 {
+    // 添加先修课程
     addCourse(before);
     addCourse(after);
     adjList[before].push_back(after);
 }
 
-std::vector<std::string> CourseGraph::getCourses() const
+vector<string> CourseGraph::getCourses() const
 {
-    return std::vector<std::string>(allCourses.begin(), allCourses.end());
+    return vector<string>(allCourses.begin(), allCourses.end());
 }
 
-const std::unordered_map<std::string, std::vector<std::string>> &CourseGraph::getAdjList() const
+const unordered_map<string, vector<string>> &CourseGraph::getAdjList() const
 {
     return adjList;
 }
-
-std::unordered_map<std::string, int> CourseGraph::computeIndegrees() const
+// 计算度
+unordered_map<string, int> CourseGraph::computeIndegrees() const
 {
-    std::unordered_map<std::string, int> indegree;
+    // 课程 度
+    unordered_map<string, int> indegree;
     for (const auto &course : allCourses)
     {
         indegree[course] = 0;
     }
+    // c++17的结构化绑定语法
+    // 遍历邻接表，计算每个课程的入度
     for (const auto &[from, toList] : adjList)
     {
         for (const auto &to : toList)

@@ -18,7 +18,7 @@ int main()
         cout << msg;
         fout << msg;
     };
-
+    // 输入
     while (fin >> pre >> post)
     {
         graph.addCourse(pre);
@@ -26,6 +26,7 @@ int main()
         graph.addPrerequisite(pre, post);
     }
 
+    // 判断是否有环的存在
     bool hasCycle = false;
     auto topoOrder = TopologicalSorter::kahnSort(graph, hasCycle);
     if (hasCycle)
@@ -40,7 +41,7 @@ int main()
         print(course + " ");
     }
     print("\n\n");
-
+    // 添加输出到文件
     auto semesters = SemesterPlanner::planSemesters(graph);
     print("学期课程安排如下:\n");
     for (const auto &[sem, courses] : semesters)
