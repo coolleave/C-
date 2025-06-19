@@ -19,7 +19,7 @@ map<int, vector<string>> SemesterPlanner::planSemesters(const CourseGraph &graph
         if (deg == 0)
         {
             q.push(course);
-            levelMap[course] = 1; // 学期为1
+            levelMap[course] = 1; // 学期级别从1开始，最先修
         }
     }
     // 分配学期

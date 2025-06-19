@@ -36,6 +36,7 @@ std::vector<std::string> TopologicalSorter::kahnSort(const CourseGraph &graph, b
         }
     }
     // 检查是否有环
+    // 如果拓扑排序后的课程数量 少于原始图中课程总数，说明有一部分课程没有被排序到，这些课程肯定是在环中，所以说明图里有 环（cycle）。
     hasCycle = (result.size() != graph.getCourses().size());
     return result;
 }

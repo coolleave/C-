@@ -8,8 +8,8 @@ using namespace std;
 int main()
 {
     CourseGraph graph;
-    ifstream fin("data.txt");    // 输入文件
-    ofstream fout("output.txt"); // 添加文件输出流
+    ifstream fin("data-3.txt");    // 输入文件
+    ofstream fout("output-3.txt"); // 添加文件输出流
     string pre, post;
 
     // 自定义一个 lambda 同时写入控制台和文件
@@ -21,6 +21,7 @@ int main()
     // 输入
     while (fin >> pre >> post)
     {
+        print("读取课程关系: " + pre + " -> " + post + "\n");
         graph.addCourse(pre);
         graph.addCourse(post);
         graph.addPrerequisite(pre, post);
@@ -29,6 +30,7 @@ int main()
     // 判断是否有环的存在
     bool hasCycle = false;
     auto topoOrder = TopologicalSorter::kahnSort(graph, hasCycle);
+    print("总课程数：" + to_string(graph.getCourses().size()) + "\n");
     if (hasCycle)
     {
         print("课程依赖中存在循环，无法安排课程！\n");
@@ -43,6 +45,7 @@ int main()
     print("\n\n");
     // 添加输出到文件
     auto semesters = SemesterPlanner::planSemesters(graph);
+
     print("学期课程安排如下:\n");
     for (const auto &[sem, courses] : semesters)
     {
