@@ -8,8 +8,8 @@ using namespace std;
 int main()
 {
     CourseGraph graph;
-    ifstream fin("data-3.txt");    // 输入文件
-    ofstream fout("output-3.txt"); // 添加文件输出流
+    ifstream fin("data-2.txt");    // 输入文件
+    ofstream fout("output-2.txt"); // 添加文件输出流
     string pre, post;
 
     // 自定义一个 lambda 同时写入控制台和文件
@@ -37,23 +37,36 @@ int main()
         return 1;
     }
 
-    print("拓扑排序结果（推荐修课顺序）:\n");
-    for (const auto &course : topoOrder)
-    {
-        print(course + " ");
-    }
-    print("\n\n");
-    // 添加输出到文件
-    auto semesters = SemesterPlanner::planSemesters(graph);
+    print("所有可能的拓扑排序（修课顺序）如下：\n");
 
-    print("学期课程安排如下:\n");
-    for (const auto &[sem, courses] : semesters)
+    vector<vector<string>> allOrders;
+    TopologicalSorter::allTopologicalSorts(graph, allOrders);
+
+    int orderIdx = 1;
+    for (const auto &order : allOrders)
     {
-        print("第 " + to_string(sem) + " 学期: ");
-        for (const auto &c : courses)
-            print(c + " ");
+        print("排序 #" + to_string(orderIdx++) + ": ");
+        for (const auto &course : order)
+            print(course + " ");
         print("\n");
     }
+
+    // for (const auto &course : topoOrder)
+    // {
+    //     print(course + " ");
+    // }
+    // print("\n\n");
+    // // 添加输出到文件
+    // auto semesters = SemesterPlanner::planSemesters(graph);
+
+    // print("学期课程安排如下:\n");
+    // for (const auto &[sem, courses] : semesters)
+    // {
+    //     print("第 " + to_string(sem) + " 学期: ");
+    //     for (const auto &c : courses)
+    //         print(c + " ");
+    //     print("\n");
+    // }
 
     return 0;
 }

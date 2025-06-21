@@ -1,16 +1,6 @@
 #include "course_graph.h"
 using namespace std;
-// 添加课程
-// void CourseGraph::addCourse(const string &course)
-// {
 
-//     allCourses.insert(course);
-//     // 如果 adjList 中还没有这个课程的后继，就为它创建一个空的后继课程列表。
-//     if (adjList.find(course) == adjList.end())
-//     {
-//         adjList[course] = {};
-//     }
-// }
 void CourseGraph::addCourse(const string &course)
 {
     allCourses.insert(course);
